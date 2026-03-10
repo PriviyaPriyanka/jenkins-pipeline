@@ -3,22 +3,17 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        echo 'Code checked out'
+        checkout scm
       }
     }
-    stage('Build') {
+    stage('Build Docker image') {
       steps {
-        echo 'Build stage running'
+        sh 'docker build -t git-project:latest .'
       }
     }
-    stage('Test') {
+    stage('Run container') {
       steps {
-        echo 'Test stage running'
-      }
-    }
-    stage('Deploy') {
-      steps {
-        echo 'Deploy stage running'
+        sh 'docker run git-project:latest'
       }
     }
   }
